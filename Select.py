@@ -1,26 +1,41 @@
-# from Window import Window
-# from button import Button
-#
-#
-# class SelectCharacter(Window):
-#     def initButtons(self):
-#         self.buttons.add("character1",Button())
-#         self.buttons.add("character1", Button())
-#     def __init__(self,background,screen,windowStack):
-#         super().__init__(background,screen,windowStack)
+import pygame
+import os
 
-if self.state == self.COLLISION:
-    self.locked.acquire()
-    while self.ques.isTHINKING():
-        self.ques.update()
-        self.ques.getAnswer()
-        self.ques.draw()
-        print("1")
-    self.locked.release()
-    if self.ques.isTrue():
-        self.player.heal()
-    self.ques.refresh()
-    self.ques.updateContent()
-    self.inc = self.talk_to_player.continue_game()
-    self.state = self.PLAYING
-    pygame.display.update()
+import button
+from Tab import Tab
+import button as a
+
+ANSWER = [pygame.image.load(os.path.join("Assets/Other", "AnswerIdle.png")),
+          pygame.image.load(os.path.join("Assets/Other", "AnswerHover.png")),
+          pygame.image.load(os.path.join("Assets/Other", "Question_AC.png")),
+          pygame.image.load(os.path.join("Assets/Other", "Question_WA.png"))]
+class SelectCharacter(Tab):
+    def initButtons(self):
+        self.buttonlist.add("character1",button.Button(100,100,30,ANSWER[0],ANSWER[1],"Black Knight"))
+        self.buttonlist.add("character2",button.Button(250,100,30,ANSWER[0],ANSWER[1],"Sexy Pig"))
+        self.buttonlist.add("character3",button.Button(350,100,30,ANSWER[0],ANSWER[1],"Maria Ozawa"))
+    def __init__(self,background,screen):
+        super().__init__(background,screen)
+        self.initButtons()
+        self.type = 0
+        self.state = self.THINKING
+    def isAnswer(self):
+        return self.state == self.ISANSWER
+    def getAnswer(self):
+        return self.type
+    def update(self):
+        self.buttonlist.update()
+        if self.buttonlist.findButton("character1").isCLICK():
+            self.type = 0
+            self.state = self.THINKING
+        elif self.buttonlist.findButton("character2").isCLICK():
+            self.type = 1
+            self.state = self.THINKING
+        elif self.buttonlist.findButton("character3").isCLICK():
+            self.type = 1
+            self.state = self.THINKING
+    def draw(self):
+        self.screen.blit(self.background,(0,0))
+        self.buttonlist.draw(self.screen)
+
+

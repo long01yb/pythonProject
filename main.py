@@ -19,5 +19,3 @@ class Control:
             self.windowStack[-1].run()
 mainn = Control()
 mainn.run()
-
-print([1,2,3,4,5])

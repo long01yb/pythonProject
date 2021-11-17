@@ -3,6 +3,7 @@ import button
 
 class Tab:
     THINKING = 1
+    ISANSWER = 10
     def __init__(self,screen,background):
         self.screen = screen
         self.background = background

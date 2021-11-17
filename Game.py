@@ -14,11 +14,11 @@ BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Bullet.png"))]
 BULLET_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Bullet_enemy.png"))]
 class Game(Window):
     COLLISION = 10
-    def __init__(self,background,screen,windowStack,state,Player_sprite):
+    def __init__(self,background,screen,windowStack,state,Player_sprite,type = 0):
         super().__init__(background,screen,windowStack,state)
         self.talk_to_player = Communicate()
         self.speed = 4
-        self.player = Player.Dinosaur(self.screen,Player_sprite)
+        self.player = Player.Dinosaur(self.screen,Player_sprite,type)
         self.obtacleList = Obtacles.ObtacleList()
         BG_ques = pygame.image.load(os.path.join("Assets/Other", "Question_BG.png"))
         self.ques = Question(self.screen,BG_ques)

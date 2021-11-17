@@ -27,8 +27,9 @@ class Bullet:
     def draw(self):
         self.screen.blit(self.bullet,(self.position))
 class Dinosaur():
-    def __init__(self,screen,characterList,type = 0):
+    def __init__(self,screen,characterList,type):
         self.count = 0
+        self.type = type
         self.characterList = characterList # a surface
         self.character = self.characterList[type]
         self.position = self.character.get_rect()
@@ -62,7 +63,7 @@ class Dinosaur():
         rect_x = self.position.x + self.character.get_width()//2
         rect_y = self.position.y + self.character.get_height() // 2
         if len(self.bullet) < 10:
-            self.bullet.append(Bullet(speed,bulletList,screen,rect_x,rect_y))
+            self.bullet.append(Bullet(speed,bulletList,screen,rect_x,rect_y,self.type))
     def updateSpeedGame(self,speed,inc):
         self.userInput = pygame.key.get_pressed()
         self.speed = speed

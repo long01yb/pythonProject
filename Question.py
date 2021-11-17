@@ -2,8 +2,6 @@ import pygame
 import os
 
 from Tab import Tab
-from Window import  Window
-from pygame.locals import *
 import button as a
 QUESTION = [pygame.image.load(os.path.join("Assets/Other", "Question.png"))]
 ANSWER = [pygame.image.load(os.path.join("Assets/Other", "AnswerIdle.png")),
