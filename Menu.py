@@ -18,15 +18,12 @@ SETTING = [pygame.image.load(os.path.join("Assets/Other", "SettingIdle.png")),
          pygame.image.load(os.path.join("Assets/Other", "SettingHover.png"))]
 QUIT = [pygame.image.load(os.path.join("Assets/Other", "QuitIdle.png")),
          pygame.image.load(os.path.join("Assets/Other", "QuitHover.png"))]
-BG_ques = pygame.image.load(os.path.join("Assets/Other", "Question_BG.png"))
 class Menu(Window):
     SELECTING = 11
     def __init__(self,bg,screen,windowStack):
         super().__init__(bg,screen,windowStack)
         self.points = 0
         self.initButtons()
-
-        self.selectCharacter = Select.SelectCharacter(self.background,self.screen)
     def initButtons(self):
         self.buttons.add("Start",a.Button(150,190,20,START[0],START[1]))
         self.buttons.add("Setting",a.Button(150, 255,20,SETTING[0],SETTING[1]))
@@ -38,26 +35,17 @@ class Menu(Window):
                 self.state = self.QUIT
                 self.windowStack.pop()
             elif self.buttons.findButton("Start").isCLICK():
-                self.state = self.SELECTING
+                # self.state = self.SELECTING
+                self.state = self.PLAYING
+                game = Game(BG1,self.screen,self.windowStack,self.state,RUNNING,0)
+                game.runThread()
+                self.windowStack.append(game)
     def getState(self):
         return self.state
     def draw(self):
         SCREEN.blit(self.background,(0,0))
         self.buttons.draw(self.screen)
-    def select(self):
-        self.selectCharacter.update()
-        type = self.selectCharacter.getAnswer()
-        self.selectCharacter.draw()
-        if self.selectCharacter.isAnswer():
-            pygame.time.delay(500)
-            game = Game(BG1, self.screen, self.windowStack,
-                        self.state, RUNNING,type)
-            game.runThread()
-            self.windowStack.append(game)
     def run(self):
-        if self.state == self.SELECTING:
-            self.select()
-        else:
-            self.update()
-            self.draw()
+        self.update()
+        self.draw()
         pygame.display.update()
