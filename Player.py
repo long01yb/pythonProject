@@ -74,13 +74,13 @@ class Dinosaur():
         self.inc = inc
     def updatePosition(self):
         if self.userInput[pygame.K_s] and self.position.y <550:
-            self.position.y += 5 * self.speed *self.inc
+            self.position.y += 4* self.speed *self.inc
         elif self.userInput[pygame.K_w] and self.position.y > -50:
-            self.position.y -= 5 * self.speed *self.inc
+            self.position.y -=4 * self.speed *self.inc
         elif self.userInput[pygame.K_d] and self.position.x <1100:
-            self.position.x += 5 * self.speed * self.inc
+            self.position.x += 4 * self.speed * self.inc
         elif self.userInput[pygame.K_a] and self.position.x > -50:
-            self.position.x -= 5 * self.speed * self.inc
+            self.position.x -= 4 * self.speed * self.inc
     def updateState(self):
         if self.state == COLLISION:
             self.hp -= 10
