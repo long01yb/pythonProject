@@ -1,3 +1,4 @@
+import sys
 from threading import Thread
 
 import pygame.display
@@ -18,7 +19,7 @@ class Animation(Thread):
         self.test = 0
     def drawPoint(self):
         font = pygame.font.Font('freesansbold.ttf', 20)
-        text = font.render("Points: " + str(self.communicate.getPoint()), True, (150, 50, 50))
+        text = font.render("Points: " + str(self.communicate.getPoint()//4), True, (150, 50, 50))
         textRect = text.get_rect()
         textRect.center = (1000, 40)
         self.screen.blit(text, textRect)
@@ -32,6 +33,8 @@ class Animation(Thread):
         self.drawPoint()
     def run(self):
         while self.communicate.isRunning():
+            if self.communicate.isQuit():
+                break
             if self.communicate.isCollision():
                 self.ques.run()
                 if self.ques.isTrue():
@@ -41,10 +44,10 @@ class Animation(Thread):
                     self.ques.updateContent()
                     self.communicate.setCollision(False)
                     self.communicate.continue_game()
+            self.obtacleList.update()
             self.player.update()
-            self.obtacleList.update(self.player)
 
             if not self.communicate.isCollision():
                 self.draw()
-            self.clock.tick(30)
+            self.clock.tick(40)
             pygame.display.update()

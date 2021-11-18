@@ -10,15 +10,16 @@ class Bullet:
         self.speed = speed
         self.screen = screen
         self.bulletList = bulletList
-        self.type = type
-        self.bullet = self.bulletList[type]
+        self.type = 0
+        self.bullet = self.bulletList[0]
         self.position = self.bullet.get_rect()
         self.position.x = x
         self.position.y = y
         self.state = ISALIVE
-    def isCollision(self, enemyPosition):
-        if self.position.colliderect(enemyPosition):
+    def isCollision(self, enemy):
+        if self.position.colliderect(enemy):
             self.state = DEAD
+            enemy.isCollision()
         return self.state == DEAD
     def isDead(self):
         return (self.position.x >= 1100 or self.state == DEAD)
@@ -48,15 +49,18 @@ class Dinosaur():
         return self.position
     def getBullet(self):
         return self.bullet
+    def alive(self):
+        self.state = ISALIVE
     def isAlive(self):
         return self.state == ISALIVE
     def isDead(self):
         return self.hp < 0
     def heal(self):
         self.hp += 10
-    def isCollision(self,enemyPosition = None):
-        if enemyPosition != None and self.position.colliderect(enemyPosition):
+    def isCollision(self,enemy = None):
+        if enemy != None and self.position.colliderect(enemy.getRect()):
             self.state = COLLISION
+            enemy.isCollision()
         return self.state == COLLISION
     def shoot(self,speed,bulletList,screen):
         self.state = SHOOTING
@@ -70,13 +74,13 @@ class Dinosaur():
         self.inc = inc
     def updatePosition(self):
         if self.userInput[pygame.K_s] and self.position.y <550:
-            self.position.y += 4 * self.speed *self.inc
+            self.position.y += 5 * self.speed *self.inc
         elif self.userInput[pygame.K_w] and self.position.y > -50:
-            self.position.y -= 4 * self.speed *self.inc
+            self.position.y -= 5 * self.speed *self.inc
         elif self.userInput[pygame.K_d] and self.position.x <1100:
-            self.position.x += 4 * self.speed * self.inc
+            self.position.x += 5 * self.speed * self.inc
         elif self.userInput[pygame.K_a] and self.position.x > -50:
-            self.position.x -= 4 * self.speed * self.inc
+            self.position.x -= 5 * self.speed * self.inc
     def updateState(self):
         if self.state == COLLISION:
             self.hp -= 10
@@ -87,9 +91,9 @@ class Dinosaur():
             self.state = DEAD
     def updateBullet(self):
         for i in self.bullet:
-            i.update()
             if i.isDead():
                 self.bullet.remove(i)
+            i.update()
     def update(self):
         if self.inc != 0:
             self.updateBullet()

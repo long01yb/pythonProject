@@ -1,41 +1,63 @@
+import sys
+
 import pygame
 import os
 
 import button
-from Tab import Tab
-import button as a
-
-ANSWER = [pygame.image.load(os.path.join("Assets/Other", "AnswerIdle.png")),
-          pygame.image.load(os.path.join("Assets/Other", "AnswerHover.png")),
-          pygame.image.load(os.path.join("Assets/Other", "Question_AC.png")),
-          pygame.image.load(os.path.join("Assets/Other", "Question_WA.png"))]
-class SelectCharacter(Tab):
+from Game import Game
+from Window import Window
+BG1 = pygame.image.load(os.path.join("Assets/Other", "BG_Game.png"))
+RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player.png")),
+           pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player2.png")),
+           pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player3.png"))]
+CHARACTER = [pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HAHover.png")),
+          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HAIdle.png")),
+          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HDHover.png")),
+          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HDIdle.png")),
+             pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HLHover.png")),
+             pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HLIdle.png"))]
+class SelectCharacter(Window):
+    ISANSWER = 20
+    THINKING = 21
     def initButtons(self):
-        self.buttonlist.add("character1",button.Button(100,100,30,ANSWER[0],ANSWER[1],"Black Knight"))
-        self.buttonlist.add("character2",button.Button(250,100,30,ANSWER[0],ANSWER[1],"Sexy Pig"))
-        self.buttonlist.add("character3",button.Button(350,100,30,ANSWER[0],ANSWER[1],"Maria Ozawa"))
-    def __init__(self,background,screen):
-        super().__init__(background,screen)
+        self.buttons.add("character1",button.Button(100,100,30,CHARACTER[0],CHARACTER[1]))
+        self.buttons.add("character2",button.Button(450,100,30,CHARACTER[2],CHARACTER[3]))
+        self.buttons.add("character3",button.Button(800,100,30,CHARACTER[4],CHARACTER[5]))
+    def __init__(self,background,screen,windowstack):
+        super().__init__(background,screen,windowstack)
         self.initButtons()
-        self.type = 0
+        self.type = -1
         self.state = self.THINKING
     def isAnswer(self):
         return self.state == self.ISANSWER
     def getAnswer(self):
         return self.type
     def update(self):
-        self.buttonlist.update()
-        if self.buttonlist.findButton("character1").isCLICK():
-            self.type = 0
-            self.state = self.THINKING
-        elif self.buttonlist.findButton("character2").isCLICK():
-            self.type = 1
-            self.state = self.THINKING
-        elif self.buttonlist.findButton("character3").isCLICK():
-            self.type = 1
-            self.state = self.THINKING
+        self.buttons.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if self.buttons.findButton("character1").isCLICK():
+                self.type = 2
+            elif self.buttons.findButton("character2").isCLICK():
+                self.type = 1
+            elif self.buttons.findButton("character3").isCLICK():
+                self.type = 0
+            if self.type != -1:
+                self.state = self.PLAYING
+                game = Game(BG1, self.screen, self.windowStack, self.state, RUNNING, self.type)
+                game.runThread()
+                self.windowStack.append(game)
     def draw(self):
         self.screen.blit(self.background,(0,0))
-        self.buttonlist.draw(self.screen)
+        self.buttons.draw(self.screen)
+    def run(self):
+        if self.state == self.PLAYING:
+            self.windowStack.pop()
+        self.update()
+        self.draw()
+        pygame.display.update()
+
 
 

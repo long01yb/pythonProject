@@ -12,25 +12,23 @@ class ObtacleList: #manage obtacle
         self.obstacles.append(obstacle)
     def isEmpty(self):
         return self.total == 0
+    def canGen(self):
+        return self.total <= 2
     def updateSpeed(self,speed,inc):
         self.speed = speed
         self.inc = inc
     def updateCollision(self,player):
+        bullets = player.getBullet()
         for obs in self.obstacles:
-            if player.isCollision(obs.getRect()):
-                self.obstacles.remove(obs)
-                self.total -= 1
-            for bullet in player.getBullet():
-                if self.total == 0:
-                    break
-                if bullet.isCollision(obs.getRect()) and (obs in self.obstacles):
-                    self.obstacles.remove(obs)
-                    self.total -= 1
-    def update(self,player):    #update with player too
-        self.updateCollision(player)
+            if self.total == 0:
+                break
+            player.isCollision(obs)
+            for bullet in bullets:
+                bullet.isCollision(obs)
+    def update(self):    #update with player too
         for obs in self.obstacles:
             obs.update(self.speed*self.inc)
-            if obs.getX() <= 0:
+            if obs.getX() <= 0 or obs.isDead():
                 self.obstacles.remove(obs)
                 self.total -= 1
     def draw(self):
@@ -44,9 +42,11 @@ class Obstacle: # things make noise
         self.rect = self.image[self.type].get_rect()
         self.rect.x = 1200
         self.inc = 1
-    # collison
-    def isCollion(self,position):
-        return self.image.get_rect.colliderect(position)
+        self.hp = 10
+    def isCollision(self):
+        self.hp -= 10
+    def isDead(self):
+        return self.hp <= 0
     def update(self,speed):
         self.rect.x -= 4*speed
     def draw(self):
@@ -60,7 +60,7 @@ class Obstacle: # things make noise
 class EnemyPlane(Obstacle):
     def __init__(self,screen,image,type = 0):
         super().__init__(screen,image,type)
-        rand = random.choice([100,200,300,400,500,600])
+        rand = random.choice([100,150,200,250,300,350,400,450,500,550,600])
         self.rect.y = rand
         rand2 = random.choice([1200,1300,1400])
         self.rect.x = rand2
@@ -73,3 +73,34 @@ class BulletEnemy(Obstacle):
         self.rect.y = rect_y
     def update(self,speed):
         self.rect.x -= 5*speed
+class RockBig(Obstacle):
+    def __init__(self,screen,image,type = 0):
+        super().__init__(screen,image,type)
+        rand = random.randint(0,600)
+        self.rect.y = rand
+        rand2 = random.randint(1100,1200)
+        self.rect.x = rand2
+        rand3 = random.choice([80,120,150])
+        self.hp = rand3
+        self.ran = -4
+    def update(self,speed):
+        self.rect.x -= (speed+1)*self.inc
+        self.rect.y += self.ran*self.inc
+        self.ran *= -1
+class RockSmall(Obstacle):
+    def __init__(self,screen,image,type = 0):
+        super().__init__(screen,image,type)
+        rand = random.randint(-150,-30)
+        self.rect.y = rand
+        rand2 = random.randint(500,1100)
+        if rand2 % 4 != 1:
+            self.rect.x = rand2
+        else:
+            self.rect.x = rand2 - 400
+    def isDead(self):
+        return (self.hp <= 0 or self.rect.y >= 600)
+    def update(self,speed):
+        self.rect.x -= (speed*2)*self.inc
+        self.rect.y += speed*3*self.inc
+
+

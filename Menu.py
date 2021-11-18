@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import  os
 
@@ -8,16 +10,14 @@ import button as a
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player.png")),
-           pygame.image.load(os.path.join("Assets/Dino", "DinoRun1.png"))]
 
-BG1 = pygame.image.load(os.path.join("Assets/Other", "BG_Game.png"))
 START = [pygame.image.load(os.path.join("Assets/Other", "StartIdle.png")),
          pygame.image.load(os.path.join("Assets/Other", "StartHover.png"))]
 SETTING = [pygame.image.load(os.path.join("Assets/Other", "SettingIdle.png")),
          pygame.image.load(os.path.join("Assets/Other", "SettingHover.png"))]
 QUIT = [pygame.image.load(os.path.join("Assets/Other", "QuitIdle.png")),
          pygame.image.load(os.path.join("Assets/Other", "QuitHover.png"))]
+BG_select = pygame.image.load(os.path.join("Assets/Other", "BG_ChoosePlayer.png"))
 class Menu(Window):
     SELECTING = 11
     def __init__(self,bg,screen,windowStack):
@@ -32,18 +32,15 @@ class Menu(Window):
         self.buttons.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT or self.buttons.findButton("Quit").isCLICK():
-                self.state = self.QUIT
-                self.windowStack.pop()
+                pygame.quit()
+                sys.exit()
             elif self.buttons.findButton("Start").isCLICK():
-                # self.state = self.SELECTING
-                self.state = self.PLAYING
-                game = Game(BG1,self.screen,self.windowStack,self.state,RUNNING,0)
-                game.runThread()
-                self.windowStack.append(game)
+                select = Select.SelectCharacter(BG_select,self.screen,self.windowStack)
+                self.windowStack.append(select)
     def getState(self):
         return self.state
     def draw(self):
-        SCREEN.blit(self.background,(0,0))
+        self.screen.blit(self.background,(0,0))
         self.buttons.draw(self.screen)
     def run(self):
         self.update()

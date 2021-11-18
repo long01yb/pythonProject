@@ -1,6 +1,9 @@
 
 class Communicate:
+    QUIT = 1
+    PLAYING = 2
     def __init__(self):
+        self.state = self.PLAYING
         self.running = True
         self.inc = 1
         self.scroll = 0
@@ -9,6 +12,10 @@ class Communicate:
         self.collision = False
     def getInc(self):
         return self.inc
+    def quit(self):
+        self.state = self.QUIT
+    def isQuit(self):
+        return self.state == self.QUIT
     def stop(self):
         self.inc = 0
         return self.inc
