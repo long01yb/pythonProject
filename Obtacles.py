@@ -73,19 +73,7 @@ class BulletEnemy(Obstacle):
         self.rect.y = rect_y
     def update(self,speed):
         self.rect.x -= 5*speed
-# class RockBig(Obstacle):
-#     def __init__(self,screen,image,type = 0):
-#         super().__init__(screen,image,type)
-#         self.isHorizon = True
-#         rand = random.randint(0,1100)
-#         if rand > 600:
-#             self.rect.x = rand
-#             self.is
-#
-#     def update(self,speed):
-#         self.rect.x -= (speed+1)*self.inc
-#         self.rect.y += self.ran*self.inc
-#         self.ran *= -1
+
 class RockBig(Obstacle):
     def __init__(self,screen,image,type = 0):
         super().__init__(screen,image,type)
@@ -107,6 +95,8 @@ class RockBig(Obstacle):
 class RockSmall(Obstacle):
     def __init__(self,screen,image,type = 0):
         super().__init__(screen,image,type)
+        if self.type >= 5:
+            self.hp = 20
         rand = random.randint(-150,-30)
         self.rect.y = rand
         rand2 = random.randint(500,1100)

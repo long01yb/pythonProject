@@ -13,7 +13,7 @@ PLANE_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Rocket_Enemy.pn
                 pygame.image.load(os.path.join("Assets/Obtacle", "Enemy2.png"))]
 BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
           pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
-          pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png"))]
+          pygame.image.load(os.path.join("Assets/Dino", "Bullet_Rocket1.png"))]
 BULLET_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Bullet_enemy.png"))]
 ROCKBIG = [pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Big.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Big.png")),
@@ -59,15 +59,15 @@ class Game(Window):
     def isQUIT(self):
         return self.state == self.QUIT
     def updateState(self):
+        IOinput = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.talk_to_player.quit()
                 pygame.quit()
                 sys.exit()
-            elif self.player.isDead():
+            elif self.player.isDead() or IOinput[pygame.K_DELETE]:
                 self.talk_to_player.setRunning(False)
                 self.windowStack.pop()
-        IOinput = pygame.key.get_pressed()
         if self.state != self.COLLISION and IOinput[pygame.K_SPACE]:
             if self.state == self.STOP:
                 self.state = self.PLAYING
