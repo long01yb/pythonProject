@@ -71,11 +71,8 @@ class Button():
             text_len = text_img.get_width()
             screen.blit(text_img, (
             self.x + int(self.width / 2) - int(text_len / 2), self.y + 25))
-    def draw1(self,screen,img):
-        if self.state == self.HOVER:
-            screen.blit(img,(self.x,self.y))
-        else:
-            screen.blit(img,(self.x,self.y))
+    def drawAnswer(self,screen,img):
+        screen.blit(img,(self.x,self.y))
         if self.text != None:
             text_img = self.font.render(self.text, True, (0,0,0))
             text_len = text_img.get_width()

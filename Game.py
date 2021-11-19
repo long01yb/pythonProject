@@ -101,7 +101,7 @@ class Game(Window):
 
     def updateInfomation(self):
         if pygame.mouse.get_pressed()[0]:
-            self.player.shoot(self.speed,BULLET,self.screen)
+            self.player.shoot()
         self.inc = self.talk_to_player.getInc()
         if self.points % 450 == 0:
             self.speed += self.inc

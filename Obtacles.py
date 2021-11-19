@@ -24,6 +24,8 @@ class ObtacleList: #manage obtacle
                 break
             player.isCollision(obs)
             for bullet in bullets:
+                if obs.isDead():
+                    break
                 bullet.isCollision(obs)
     def update(self):    #update with player too
         for obs in self.obstacles:
@@ -42,9 +44,9 @@ class Obstacle: # things make noise
         self.rect = self.image[self.type].get_rect()
         self.rect.x = 1200
         self.inc = 1
-        self.hp = 10
-    def isCollision(self):
-        self.hp -= 10
+        self.hp = 20
+    def isCollision(self,damage = 1):
+        self.hp -= 10*damage
     def isDead(self):
         return self.hp <= 0
     def update(self,speed):
@@ -84,7 +86,7 @@ class RockBig(Obstacle):
             self.stable = random.choice([1,2,3])
         rand2 = random.randint(1100,1200)
         self.rect.x = rand2
-        rand3 = random.choice([80,120,150])
+        rand3 = random.choice([210,260,300,350,500])
         self.hp = rand3
 
     def update(self,speed):
@@ -96,7 +98,7 @@ class RockSmall(Obstacle):
     def __init__(self,screen,image,type = 0):
         super().__init__(screen,image,type)
         if self.type >= 5:
-            self.hp = 20
+            self.hp = 40
         rand = random.randint(-150,-30)
         self.rect.y = rand
         rand2 = random.randint(500,1100)

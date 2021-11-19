@@ -32,6 +32,7 @@ class Question(Tab):
         self.CorrectAnswerindex =  int(listQA[self.index][5])
         self.buttonAC = self.buttonlist.findButton(self.QUESTION[self.CorrectAnswerindex])
         self.buttonWA = None
+        self.clock = pygame.time.Clock()
     def refresh(self):
         if self.index == len(listQA) - 1:
             self.index = -1
@@ -60,10 +61,10 @@ class Question(Tab):
                 self.state = self.ANS_FALSE
     def getAnswer(self):
             if self.state == self.ANS_TRUE:
-                self.buttonAC.draw1(self.screen,ANSWER[2])
+                self.buttonAC.drawAnswer(self.screen,ANSWER[2])
             elif self.state == self.ANS_FALSE:
-                self.buttonAC.draw1(self.screen,ANSWER[2])
-                self.buttonWA.draw1(self.screen,ANSWER[3])
+                self.buttonAC.drawAnswer(self.screen,ANSWER[2])
+                self.buttonWA.drawAnswer(self.screen,ANSWER[3])
             if self.state != self.THINKING:
                 pygame.time.delay(500)
             pygame.display.update()
