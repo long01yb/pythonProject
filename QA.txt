@@ -1,3 +1,5 @@
-1 + 1 = ? - 2 - 3 - 4 - 5 - 1
-2 * 2 = ? - 4 - 5 - 6 - ALL is not Correct - 1
-11 * 11 = ? - 122 - 131 - 121 - 113 - 3
+Minh co dep trai khong ? - Co - Rat dep trai - Sexy - Khong - 2
+Em an com chua ? - Cut!! - Toi co ban trai roi! - Em di ngu roi!! - ... - 4
+Co bao nhieu class trong Plano code ? - 10 - 12 - 13 - Biet the quai nao duoc! - 4
+Method nay dung de lam gi : game.runThread() ? - Start 1 luong Animation - Start Game - Start 2 luong Animation and Game - Cat nhat trang thai - 1
+Method nao dung de Cat nhat va cham, thuoc thread va class nao? - updateCollision(player),thread game,class Player - updateCollision(player),thread animation,class Obtacle - updateCollision(player),thread animation,class Obtacle - updateCollision(player),thread game,class ObtacleList - 4
