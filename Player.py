@@ -10,8 +10,7 @@ class Bullet:
         self.speed = speed
         self.screen = screen
         self.bulletList = bulletList
-        self.type = 0
-        self.bullet = self.bulletList[0]
+        self.bullet = self.bulletList[type]
         self.position = self.bullet.get_rect()
         self.position.x = x
         self.position.y = y

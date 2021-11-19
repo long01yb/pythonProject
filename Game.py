@@ -10,8 +10,10 @@ import Player
 import Obtacles
 from Question import  Question
 PLANE_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Rocket_Enemy.png")),
-                pygame.image.load(os.path.join("Assets/Obtacle", "Enemy.png"))]
-BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Bullet.png"))]
+                pygame.image.load(os.path.join("Assets/Obtacle", "Enemy2.png"))]
+BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
+          pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
+          pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png"))]
 BULLET_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Bullet_enemy.png"))]
 ROCKBIG = [pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Big.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Big.png")),
@@ -22,7 +24,13 @@ ROCKSMALL = [pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Small
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Small.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_2_Small.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_3_Small.png")),
-        pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_4_Small.png"))]
+        pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_4_Small.png")),
+             pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Medium.png")),
+             pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Medium.png")),
+             pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_2_Medium.png")),
+             pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_3_Medium.png")),
+             pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_4_Medium.png"))
+             ]
 class Game(Window):
     COLLISION = 10
     def __init__(self,background,screen,windowStack,state,Player_sprite,type = 0):
@@ -77,7 +85,8 @@ class Game(Window):
         t = self.speed*89 + 34
         rand1 = random.randint(1,100)
         if t%3 == 0 and self.obtacleList.canGen():
-            obs = Obtacles.EnemyPlane(self.screen, PLANE_ENEMY)
+            rand = random.choice([0,1])
+            obs = Obtacles.EnemyPlane(self.screen, PLANE_ENEMY,rand)
             self.obtacleList.add(obs)
             rand = random.choice([1, 2])
             if rand == 1:
@@ -86,7 +95,7 @@ class Game(Window):
             obs = Obtacles.RockBig(self.screen, ROCKBIG, rand1%5)
             self.obtacleList.add(obs)
         elif t%3 == 2 and self.obtacleList.canGen() :
-            obs = Obtacles.RockSmall(self.screen, ROCKSMALL, rand1%5)
+            obs = Obtacles.RockSmall(self.screen, ROCKSMALL, rand1%10)
             self.obtacleList.add(obs)
 
 
@@ -94,13 +103,13 @@ class Game(Window):
         if pygame.mouse.get_pressed()[0]:
             self.player.shoot(self.speed,BULLET,self.screen)
         self.inc = self.talk_to_player.getInc()
-        if self.points % 200 == 0:
+        if self.points % 450 == 0:
             self.speed += self.inc
         self.userInput = pygame.key.get_pressed()
         self.player.updateSpeedGame(self.speed,self.inc)
         self.obtacleList.updateSpeed(self.speed,self.inc)
         self.points += self.inc
-        self.scroll += self.inc*4
+        self.scroll += self.inc*3
         self.talk_to_player.updateInfomation(self.scroll,self.points,self.speed)
     def runThread(self):
         self.animations.start()
