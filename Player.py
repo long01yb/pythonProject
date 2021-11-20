@@ -44,10 +44,10 @@ class Bullet:
         self.position.x += (5*self.speed)
     def draw(self):
         self.screen.blit(self.bullet,(self.position))
-class Dinosaur():
-    BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Bullet.png")),
-              pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
-              pygame.image.load(os.path.join("Assets/Dino", "Bullet_Rocket1.png"))]
+class Player():
+    BULLET = [pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png")),
+              pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png")),
+              pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png"))]
     def __init__(self,screen,characterList,type):
         self.count = 0
         self.type = type

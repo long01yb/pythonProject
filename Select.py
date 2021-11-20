@@ -7,15 +7,15 @@ import button
 from Game import Game
 from Window import Window
 BG1 = pygame.image.load(os.path.join("Assets/Other", "BG_Game.png"))
-RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player.png")),
-           pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player2.png")),
-           pygame.image.load(os.path.join("Assets/Dino", "Rocket_Player3.png"))]
-CHARACTER = [pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HLHover.png")),
-          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HLIdle.png")),
-          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HDHover.png")),
-          pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HDIdle.png")),
-             pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HAHover.png")),
-             pygame.image.load(os.path.join("Assets/Dino/ButtonRocket", "ButtonRocket_HAIdle.png"))]
+RUNNING = [pygame.image.load(os.path.join("Assets/Player", "Rocket_Player.png")),
+           pygame.image.load(os.path.join("Assets/Player", "Rocket_Player2.png")),
+           pygame.image.load(os.path.join("Assets/Player", "Rocket_Player3.png"))]
+CHARACTER = [pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HLHover.png")),
+          pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HLIdle.png")),
+          pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HDHover.png")),
+          pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HDIdle.png")),
+             pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HAHover.png")),
+             pygame.image.load(os.path.join("Assets/Player/ButtonRocket", "ButtonRocket_HAIdle.png"))]
 class SelectCharacter(Window):
     ISANSWER = 20
     THINKING = 21

@@ -1,7 +1,7 @@
 import pygame
 import random
 from threading import Thread
-class ObtacleList: #manage obtacle
+class ObstacleList: #manage obtacle
     def __init__(self):
         self.obstacles = []
         self.total = 0

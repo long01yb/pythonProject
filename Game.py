@@ -7,13 +7,13 @@ import ManageAnimation
 from Comunication import Communicate
 from Window import  Window
 import Player
-import Obtacles
+import Obstacles
 from Question import  Question
 PLANE_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Rocket_Enemy.png")),
                 pygame.image.load(os.path.join("Assets/Obtacle", "Enemy2.png"))]
-BULLET = [pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
-          pygame.image.load(os.path.join("Assets/Dino", "Rocket_Bullet.png")),
-          pygame.image.load(os.path.join("Assets/Dino", "Bullet_Rocket1.png"))]
+BULLET = [pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet.png")),
+          pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet.png")),
+          pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png"))]
 BULLET_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Bullet_enemy.png"))]
 ROCKBIG = [pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Big.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Big.png")),
@@ -37,8 +37,8 @@ class Game(Window):
         super().__init__(background,screen,windowStack,state)
         self.talk_to_player = Communicate()
         self.speed = 4
-        self.player = Player.Dinosaur(self.screen,Player_sprite,type)
-        self.obtacleList = Obtacles.ObtacleList()
+        self.player = Player.Player(self.screen,Player_sprite,type)
+        self.obtacleList = Obstacles.ObstacleList()
         BG_ques = pygame.image.load(os.path.join("Assets/Other", "Question_BG.png"))
         self.ques = Question(self.screen,BG_ques)
         self.locked = threading.Lock()
@@ -81,21 +81,21 @@ class Game(Window):
             self.talk_to_player.stop()
         if self.state == self.COLLISION and not self.talk_to_player.isCollision():
             self.state = self.PLAYING
-    def generateObtacle(self):
+    def generateObstacle(self):
         t = self.speed*89 + 34
         rand1 = random.randint(1,100)
         if t%3 == 0 and self.obtacleList.canGen():
             rand = random.choice([0,1])
-            obs = Obtacles.EnemyPlane(self.screen, PLANE_ENEMY,rand)
+            obs = Obstacles.EnemyPlane(self.screen, PLANE_ENEMY,rand)
             self.obtacleList.add(obs)
             rand = random.choice([1, 2])
             if rand == 1:
-                self.obtacleList.add(Obtacles.BulletEnemy(self.screen, BULLET_ENEMY, obs.getRect()))
+                self.obtacleList.add(Obstacles.BulletEnemy(self.screen, BULLET_ENEMY, obs.getRect()))
         elif t%3 == 1 and self.obtacleList.canGen():
-            obs = Obtacles.RockBig(self.screen, ROCKBIG, rand1%5)
+            obs = Obstacles.RockBig(self.screen, ROCKBIG, rand1%5)
             self.obtacleList.add(obs)
         elif t%3 == 2 and self.obtacleList.canGen() :
-            obs = Obtacles.RockSmall(self.screen, ROCKSMALL, rand1%10)
+            obs = Obstacles.RockSmall(self.screen, ROCKSMALL, rand1%10)
             self.obtacleList.add(obs)
 
 
@@ -115,7 +115,7 @@ class Game(Window):
         self.animations.start()
     def run(self):
             if self.state == self.PLAYING:
-                self.generateObtacle()
+                self.generateObstacle()
             elif self.state == self.PLAYING and self.player.isCollision():
                 self.state = self.COLLISION
                 self.talk_to_player.setCollision(True)
@@ -126,4 +126,3 @@ class Game(Window):
             self.updateInfomation()
             self.clock.tick(40)
             pygame.display.update()
-
