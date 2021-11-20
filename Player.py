@@ -2,7 +2,6 @@ import random
 
 import pygame
 import os
-from threading import Thread
 COLLISION = 1
 ISALIVE = 2
 DEAD = 3
@@ -45,9 +44,9 @@ class Bullet:
     def draw(self):
         self.screen.blit(self.bullet,(self.position))
 class Player():
-    BULLET = [pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png")),
-              pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png")),
-              pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png"))]
+    BULLET = [pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet_3.png")),
+              pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet.png")),
+              pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet_2.png"))]
     def __init__(self,screen,characterList,type):
         self.count = 0
         self.type = type
@@ -130,4 +129,5 @@ class Player():
         for i in self.bullet:
             i.draw()
         self.screen.blit(self.character, (self.position.x, self.position.y))
+
 

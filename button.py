@@ -67,7 +67,7 @@ class Button():
         else:
             screen.blit(self.img_idle,(self.x,self.y))
         if self.text != None:
-            text_img = self.font.render(self.text, True, (0,0,0))
+            text_img = self.font.render(self.text, True, (0,0,0))  #4
             text_len = text_img.get_width()
             screen.blit(text_img, (
             self.x + int(self.width / 2) - int(text_len / 2), self.y + 25))

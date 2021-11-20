@@ -11,9 +11,6 @@ import Obstacles
 from Question import  Question
 PLANE_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Rocket_Enemy.png")),
                 pygame.image.load(os.path.join("Assets/Obtacle", "Enemy2.png"))]
-BULLET = [pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet.png")),
-          pygame.image.load(os.path.join("Assets/Player", "Rocket_Bullet.png")),
-          pygame.image.load(os.path.join("Assets/Player", "Bullet_Rocket1.png"))]
 BULLET_ENEMY = [pygame.image.load(os.path.join("Assets/Obtacle", "Bullet_enemy.png"))]
 ROCKBIG = [pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_5_Big.png")),
         pygame.image.load(os.path.join("Assets/Obtacle/Rock", "Rock_1_Big.png")),
@@ -38,13 +35,13 @@ class Game(Window):
         self.talk_to_player = Communicate()
         self.speed = 4
         self.player = Player.Player(self.screen,Player_sprite,type)
-        self.obtacleList = Obstacles.ObstacleList()
+        self.obstaclelist = Obstacles.ObstacleList()
         BG_ques = pygame.image.load(os.path.join("Assets/Other", "Question_BG.png"))
         self.ques = Question(self.screen,BG_ques)
         self.locked = threading.Lock()
         self.animations = ManageAnimation.Animation(
             self.background,self.screen,
-            self.player,self.obtacleList,
+            self.player,self.obstaclelist,
             self.talk_to_player,self.locked,
             self.ques
         )
@@ -65,7 +62,7 @@ class Game(Window):
                 self.talk_to_player.quit()
                 pygame.quit()
                 sys.exit()
-            elif self.player.isDead() or IOinput[pygame.K_DELETE]:
+            elif self.player.isDead() or IOinput[pygame.K_BACKSPACE]:
                 self.talk_to_player.setRunning(False)
                 self.windowStack.pop()
         if self.state != self.COLLISION and IOinput[pygame.K_SPACE]:
@@ -81,22 +78,22 @@ class Game(Window):
             self.talk_to_player.stop()
         if self.state == self.COLLISION and not self.talk_to_player.isCollision():
             self.state = self.PLAYING
-    def generateObstacle(self):
+    def generateObtacle(self):
         t = self.speed*89 + 34
         rand1 = random.randint(1,100)
-        if t%3 == 0 and self.obtacleList.canGen():
+        if t%3 == 0 and self.obstaclelist.canGen():
             rand = random.choice([0,1])
             obs = Obstacles.EnemyPlane(self.screen, PLANE_ENEMY,rand)
-            self.obtacleList.add(obs)
+            self.obstaclelist.add(obs)
             rand = random.choice([1, 2])
             if rand == 1:
-                self.obtacleList.add(Obstacles.BulletEnemy(self.screen, BULLET_ENEMY, obs.getRect()))
-        elif t%3 == 1 and self.obtacleList.canGen():
+                self.obstaclelist.add(Obstacles.BulletEnemy(self.screen, BULLET_ENEMY, obs.getRect()))
+        elif t%3 == 1 and self.obstaclelist.canGen():
             obs = Obstacles.RockBig(self.screen, ROCKBIG, rand1%5)
-            self.obtacleList.add(obs)
-        elif t%3 == 2 and self.obtacleList.canGen() :
+            self.obstaclelist.add(obs)
+        elif t%3 == 2 and self.obstaclelist.canGen() :
             obs = Obstacles.RockSmall(self.screen, ROCKSMALL, rand1%10)
-            self.obtacleList.add(obs)
+            self.obstaclelist.add(obs)
 
 
     def updateInfomation(self):
@@ -107,7 +104,7 @@ class Game(Window):
             self.speed += self.inc
         self.userInput = pygame.key.get_pressed()
         self.player.updateSpeedGame(self.speed,self.inc)
-        self.obtacleList.updateSpeed(self.speed,self.inc)
+        self.obstaclelist.updateSpeed(self.speed,self.inc)
         self.points += self.inc
         self.scroll += self.inc*3
         self.talk_to_player.updateInfomation(self.scroll,self.points,self.speed)
@@ -115,14 +112,15 @@ class Game(Window):
         self.animations.start()
     def run(self):
             if self.state == self.PLAYING:
-                self.generateObstacle()
+                self.generateObtacle()
             elif self.state == self.PLAYING and self.player.isCollision():
                 self.state = self.COLLISION
                 self.talk_to_player.setCollision(True)
             elif self.state == self.COLLISION and not self.player.isCollision():
                 self.state = self.PLAYING
-            self.obtacleList.updateCollision(self.player)
+            self.obstaclelist.updateCollision(self.player)
             self.updateState()
             self.updateInfomation()
             self.clock.tick(40)
             pygame.display.update()
+
