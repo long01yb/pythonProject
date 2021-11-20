@@ -1,4 +1,4 @@
-# pythonProject
+# PlanoGame
 
 Nhóm 07: Môn Lập Trình với Python cô Vũ Hoài Thư PTIT
 Thành viên:
