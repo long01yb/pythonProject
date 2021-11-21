@@ -36,7 +36,7 @@ class Button():
                  ,img_idle = None,img_hover = None, text = None):
         self.x = x
         self.y = y
-        self.font = pygame.font.Font('BeVietnamPro-Bold.ttf', sizeText)
+        self.font = pygame.font.Font('Font/BeVietnamPro-Bold.ttf', sizeText)
         self.text = text
         self.state = self.IDLE
         self.img_idle = img_idle
