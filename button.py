@@ -36,7 +36,7 @@ class Button():
                  ,img_idle = None,img_hover = None, text = None):
         self.x = x
         self.y = y
-        self.font = pygame.font.SysFont('Constantia', sizeText)
+        self.font = pygame.font.Font('BeVietnamPro-Bold.ttf', sizeText)
         self.text = text
         self.state = self.IDLE
         self.img_idle = img_idle
@@ -67,7 +67,7 @@ class Button():
         else:
             screen.blit(self.img_idle,(self.x,self.y))
         if self.text != None:
-            text_img = self.font.render(self.text, True, (0,0,0))  #4
+            text_img = self.font.render(self.text, True, (255,255,255))  #4
             text_len = text_img.get_width()
             screen.blit(text_img, (
             self.x + int(self.width / 2) - int(text_len / 2), self.y + 25))
