@@ -1,5 +1,5 @@
-Minh co dep trai khong ? - Co - Rat dep trai - Sexy - Khong - 2
-Em an com chua ? - Cut!! - Toi co ban trai roi! - Em di ngu roi!! - ... - 4
+Cau lenh return dung de ? - Ket thuc vong lap - Tra lai gia tri - Ca A va B - Ket thuc ham va tra lai gia tri - 4
+What is python ? - DTP software - a programming language - Spreadsheet software - Computer  - 2
 Co bao nhieu class trong Plano code ? - 10 - 12 - 13 - Biet the quai nao duoc! - 4
 Method nay dung de lam gi : game.runThread() ? - Start 1 luong Animation - Start Game - Start 2 luong Animation and Game - Cat nhat trang thai - 1
 Method nao dung de Cat nhat va cham, thuoc thread va class nao? - updateCollision(player),thread game,class Player - updateCollision(player),thread animation,class Obtacle - updateCollision(player),thread animation,class Obtacle - updateCollision(player),thread game,class ObtacleList - 4
