@@ -1,9 +1,6 @@
 import sys
 from threading import Thread
-
 import pygame.display
-
-
 class Animation(Thread):
     def __init__(self,background,screen,player,obtacleList,communicate,lock,ques):
         Thread.__init__(self)

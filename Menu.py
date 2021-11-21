@@ -1,8 +1,6 @@
 import sys
-
 import pygame
 import  os
-
 import Select
 from Window import  Window
 from Game import  Game

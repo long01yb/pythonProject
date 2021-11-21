@@ -97,7 +97,8 @@ class Game(Window):
 
 
     def updateInfomation(self):
-        if pygame.mouse.get_pressed()[0]:
+        IOinput = pygame.key.get_pressed()
+        if IOinput[pygame.K_RSHIFT]:
             self.player.shoot()
         self.inc = self.talk_to_player.getInc()
         if self.points % 450 == 0:
@@ -123,4 +124,3 @@ class Game(Window):
             self.updateInfomation()
             self.clock.tick(40)
             pygame.display.update()
-

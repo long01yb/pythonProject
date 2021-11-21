@@ -113,5 +113,3 @@ class RockSmall(Obstacle):
             speed -= 2
         self.rect.x -= (speed*2)*self.inc
         self.rect.y += speed*3*self.inc
-
-

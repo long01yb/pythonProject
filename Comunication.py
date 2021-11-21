@@ -1,4 +1,3 @@
-
 class Communicate:
     QUIT = 1
     PLAYING = 2
@@ -42,3 +41,4 @@ class Communicate:
         return self.collision
     def setCollision(self,collision):
         self.collision = collision
+        
