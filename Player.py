@@ -129,5 +129,4 @@ class Player():
         for i in self.bullet:
             i.draw()
         self.screen.blit(self.character, (self.position.x, self.position.y))
-
-
+        
